@@ -1,0 +1,275 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+
+\newcommand{\diagmat}[4]{\begin{pmatrix}
+    #1 & 0 & 0 & 0 \\
+    0 & #2 & 0 & 0 \\
+    0 & 0 & #3 & 0 \\
+    0 & 0 & 0 & #4
+\end{pmatrix}}
+
+\title{Physics cup 2025 problem 2}
+\author{Mircea Rebengiuc}
+
+\begin{document}
+\maketitle
+
+We will name the position vectors of the four birds $\vect r_A$, $\vect r_B$, $\vect r_C$, $\vect r_D$.
+The laws in the problem statement can be written the following way:
+
+\begin{align*}
+    \frac{d\vect r_A}{dt} &= v(t) \cdot \frac{\vect r_B - \vect r_A}{\abs{\vect r_B - \vect r_A}} \\
+    \frac{d\vect r_B}{dt} &= v(t) \cdot \frac{\vect r_C - \vect r_B}{\abs{\vect r_C - \vect r_B}} \\
+    \frac{d\vect r_C}{dt} &= v(t) \cdot \frac{\vect r_D - \vect r_C}{\abs{\vect r_D - \vect r_C}} \\
+    \frac{d\vect r_D}{dt} &= v(t) \cdot \frac{\vect r_A - \vect r_D}{\abs{\vect r_A - \vect r_D}}
+\end{align*}
+
+Since we are only interested in the shape of the trajectory of the four birds we don't need to use time as the parameter for these curves. As long as the ratios between the four derivatives and their directions are preserved then the shapes described by the system of equations remains the same.
+
+Due to symmetry we can say the following holds for any moment in time:
+
+\[\abs{\vect r_B - \vect r_A} = \abs{\vect r_C - \vect r_B} = \abs{\vect r_D - \vect r_C} = \abs{\vect r_A - \vect r_D} \defeq d(t) \]
+
+Therefore if we have a dimensionless parameter $\tau$ such that
+
+\[\frac{d\tau}{dt} = \frac{v(t)}{d(t)}\]
+
+the initial system becomes much simpler:
+
+\begin{align*}
+    \frac{d\vect r_A}{d\tau} &= \vect r_B - \vect r_A \\
+    \frac{d\vect r_B}{d\tau} &= \vect r_C - \vect r_B \\
+    \frac{d\vect r_C}{d\tau} &= \vect r_D - \vect r_C \\
+    \frac{d\vect r_D}{d\tau} &= \vect r_A - \vect r_D
+\end{align*}
+
+Using this new set of equations we can solve the problem independently for each coordinate. Without loss of generality we will solve it for the $x$ coordinate and then we will generalize for $y$ and $z$.
+
+\begin{align*}
+    \frac{dx_A}{d\tau} &= x_B - x_A \\
+    \frac{dx_B}{d\tau} &= x_C - x_B \\
+    \frac{dx_C}{d\tau} &= x_D - x_C \\
+    \frac{dx_D}{d\tau} &= x_A - x_D
+\end{align*}
+
+We will group the four positions in a column vector $\vect a$:
+
+\begin{equation*}
+\vect a = \begin{pmatrix}
+    x_A \\
+    x_B \\
+    x_C \\
+    x_D
+\end{pmatrix} \Rightarrow
+\frac{d \vect a}{d\tau} = \begin{pmatrix}
+    -1 & 1 & 0 & 0 \\
+    0 & -1 & 1 & 0 \\
+    0 & 0 & -1 & 1 \\
+    1 & 0 & 0 & -1
+\end{pmatrix} \cdot \vect a
+\end{equation*}
+
+We will name the matrix above $\mat{M}$ and we will diagonalize it $\mat{M} = \mat{R} \cdot \mat{N} \cdot \mat{R^{-1}}$
+
+\begin{equation*}
+\mat{R} = \frac{1}{2}\begin{pmatrix}
+    -1 & -i & i & 1 \\
+    1 & -1 & -1 & 1 \\
+    -1 & i & -i & 1 \\
+    1 & 1 & 1 & 1
+\end{pmatrix}; \:
+\mat{N} = \begin{pmatrix}
+    -2 & 0 & 0 & 0 \\
+    0 & -1-i & 0 & 0 \\
+    0 & 0 & -1+i & 0 \\
+    0 & 0 & 0 & 0
+\end{pmatrix}; \:
+\mat{R^{-1}} = \frac{1}{2}\begin{pmatrix}
+    -1 & 1 & -1 & 1 \\
+    i & -1 & -i & 1 \\
+    -i & -1 & i & 1 \\
+    1 & 1 & 1 & 1
+\end{pmatrix}
+\end{equation*}
+
+\begin{align*}
+\frac{d \vect a}{d\tau} &= \mat{R} \cdot \mat{N} \cdot \mat{R^{-1}} \cdot \vect a \Rightarrow \\
+\mat{R^{-1}} \cdot \frac{d \vect a}{d\tau} &= (\mat{R^{-1}} \cdot \mat{R}) \cdot \mat{N} \cdot \mat{R^{-1}} \cdot \vect a \Rightarrow \\
+(\mat{R^{-1}} \cdot \frac{d \vect a}{d\tau}) &= \mat{N} \cdot (\mat{R^{-1}} \cdot \vect a) \Rightarrow \\
+\frac{d(\mat{R^{-1}} \cdot \vect a)}{d\tau} &= \mat{N} \cdot (\mat{R^{-1}} \cdot \vect a) \Rightarrow
+\end{align*}
+
+We define $\vect b \defeq \mat{R^{-1}} \cdot \vect a$ and we how have:
+
+\[\frac{d\vect b}{d\tau} = \mat{N} \cdot \vect b
+\]
+
+Where $\mat{N}$ is a diagonal matrix. Therefore we can split the equation into the four coordinates of $\vect b$. We will write the $k^{th}$ coordinate of $\vect b$ as $b_k$ and the $k^{th}$ eigenvalue of $\mat{M}$ as $\lambda_k$.
+
+\[\frac{db_k}{d\tau} = \lambda_k \cdot b_k\]
+
+This equation of course has the following solution:
+
+\[b_k(\tau) = C_k \cdot e^{\lambda_k\tau}\]
+
+In other words we have
+
+\begin{align*}
+    \mat{R^{-1}} \cdot \vect a(\tau) &= \begin{pmatrix}
+        e^{\lambda_1\tau} & 0 & 0 & 0 \\
+        0 & e^{\lambda_2\tau} & 0 & 0 \\
+        0 & 0 & e^{\lambda_3\tau} & 0 \\
+        0 & 0 & 0 & e^{\lambda_4\tau}
+    \end{pmatrix} \cdot \mat{R^{-1}}\cdot \vect a(0) \Rightarrow \\
+    \vect a(\tau) &= \mat{R} \cdot \begin{pmatrix}
+        e^{\lambda_1\tau} & 0 & 0 & 0 \\
+        0 & e^{\lambda_2\tau} & 0 & 0 \\
+        0 & 0 & e^{\lambda_3\tau} & 0 \\
+        0 & 0 & 0 & e^{\lambda_4\tau}
+    \end{pmatrix} \cdot \mat{R^{-1}}\cdot \vect a(0)
+\end{align*}
+
+Therefore $\vect a$'s derivative is
+
+\begin{align*}
+    \frac{d\vect a}{d\tau} = \mat{R}\cdot\mat{N}\cdot\mat{R^{-1}}\cdot\vect a(\tau) = \mat{R} \cdot \begin{pmatrix}
+        \lambda_1e^{\lambda_1\tau} & 0 & 0 & 0 \\
+        0 & \lambda_2e^{\lambda_2\tau} & 0 & 0 \\
+        0 & 0 & \lambda_3e^{\lambda_3\tau} & 0 \\
+        0 & 0 & 0 & \lambda_4e^{\lambda_4\tau}
+    \end{pmatrix} \cdot \mat{R^{-1}}\cdot \vect a(0)
+\end{align*}
+
+Now we return to our original task: calculating the total distance traveled by bird A. From now on we will name the column vectors containing the coordinates of all four birds $\vect a_x$, $\vect a_y$, $\vect a_z$. Since at all moments all 4 velocities are equal the total distance traveled in any small amount of time $dt$ is the same for all four birds. 
+
+\[dS^2 = {dx_A}^2 + {dy_A}^2 + {dz_A}^2 \Rightarrow\]
+\begin{align*}
+    4dS^2 = \; &({dx_A}^2 + {dx_B}^2 + {dx_C}^2 + {dx_D}^2) \; + \\
+        &({dy_A}^2 + {dy_B}^2 + {dy_C}^2 + {dy_D}^2) \; + \\
+        &({dz_A}^2 + {dz_B}^2 + {dz_C}^2 + {dz_D}^2) \Rightarrow
+\end{align*}
+\[4dS^2 = (d\vect a_x)^2 + (d\vect a_y)^2 + (d\vect a_z)^2 \Rightarrow\]
+\[4(\frac{dS}{d\tau})^2 = (\frac{d\vect a_x}{d\tau})^2 + (\frac{d\vect a_y}{d\tau})^2 + (\frac{d\vect a_z}{d\tau})^2\]
+
+Here by $(\vect v)^2$ where $\vect v$ is a vector we mean it's dot product with itself $\vect v \cdot \vect v = \abs{\vect v}^2$
+
+We can now write the total space traveled by brid A:
+
+\[S = \int_0^{+\infty}\frac{dS}{d\tau}d\tau = \frac{1}{2}\int_0^{+\infty}\sqrt{(\frac{d\vect a_x}{d\tau})^2 + (\frac{d\vect a_y}{d\tau})^2 + (\frac{d\vect a_z}{d\tau})^2}\cdot d\tau\]
+
+Fortunately $\mat{R}$ is a \textbf{unitary} matrix. In other words it's inverse is equal to it's conjugate transpose $\mat{R}\cdot\mat{R^H} = \mat{I_4}$. This property means that $\vect v$'s squared euclidean length (the dot product between itself and its complex conjugate vector) is the same as that of $\mat{R} \cdot \vect v$.
+
+\begin{align*}
+(\frac{d\vect a_x}{d\tau})^2 &= \left(\mat{R}\cdot\diagmat{\lambda_1e^{\lambda_1\tau}}{\lambda_2e^{\lambda_2\tau}}{\lambda_3e^{\lambda_3\tau}}{\lambda_4e^{\lambda_4\tau}}\cdot \vect b_x(0)\right)^2 \Rightarrow \\
+(\frac{d\vect a_x}{d\tau})^2 &= \left(\diagmat{\lambda_1e^{\lambda_1\tau}}{\lambda_2e^{\lambda_2\tau}}{\lambda_3e^{\lambda_3\tau}}{\lambda_4e^{\lambda_4\tau}}\cdot \vect b_x(0)\right)^H \cdot \left(\diagmat{\lambda_1e^{\lambda_1\tau}}{\lambda_2e^{\lambda_2\tau}}{\lambda_3e^{\lambda_3\tau}}{\lambda_4e^{\lambda_4\tau}}\cdot \vect b_x(0)\right) \Rightarrow \\
+(\frac{d\vect a_x}{d\tau})^2 &= \sum_{k=1}^{4}\abs{\lambda_ke^{\lambda_k\tau}\cdot \vect b_x(0)_k}^2 \Rightarrow \\
+(\frac{d\vect a_x}{d\tau})^2 &= \sum_{k=1}^{4}\abs{\lambda_k}^2 \cdot e^{2\Re{\lambda_k}\tau}\cdot \abs{\vect b_x(0)_k}^2
+\end{align*}
+
+Now we substitute back in the integral
+
+\begin{align*}
+S = \frac{1}{2}\int_0^{+\infty}\sqrt{\sum_{k=1}^{4} \left(\abs{\lambda_k}^2 \cdot e^{2\Re{\lambda_k}\tau} \right) \cdot \left(\abs{\vect b_x(0)_k}^2 + \abs{\vect b_y(0)_k}^2 + \abs{\vect b_z(0)_k}^2\right)}\cdot d\tau
+\end{align*}
+
+For each of the four coordinates we have a coefficient
+
+\[\alpha_k \defeq \abs{\lambda_k}^2 \cdot \left(\abs{\vect b_x(0)_k}^2 + \abs{\vect b_y(0)_k}^2 + \abs{\vect b_z(0)_k}^2\right)\]
+
+Using the coordinates of the vertices of the tetrahedron we calculate the four coefficients
+
+\[\vect a_x(0) = \frac{a}{2\sqrt{2}}\begin{pmatrix}
+    1\\
+    1\\
+    -1\\
+    -1
+\end{pmatrix} \quad
+\vect a_y(0) = \frac{a}{2\sqrt{2}}\begin{pmatrix}
+    1\\
+    -1\\
+    1\\
+    -1
+\end{pmatrix}\quad
+\vect a_z(0) = \frac{a}{2\sqrt{2}}\begin{pmatrix}
+    1\\
+    -1\\
+    -1\\
+    1
+\end{pmatrix}\quad \Rightarrow\]
+
+\[\vect b_x(0) = \frac{a}{4\sqrt{2}}\begin{pmatrix}
+    0\\
+    -2+2i\\
+    -2-2i\\
+    0
+\end{pmatrix}\quad
+\vect b_y(0) = \frac{a}{4\sqrt{2}}\begin{pmatrix}
+    -4\\
+    0\\
+    0\\
+    0
+\end{pmatrix}\quad
+\vect b_z(0) = \frac{a}{4\sqrt{2}}\begin{pmatrix}
+    0\\
+    2+2i\\
+    2-2i\\
+    0
+\end{pmatrix} \quad \Rightarrow\]
+
+\[\alpha_1 = \abs{-2}^2\cdot\frac{a^2}{32}(0+16+0) \quad \alpha_2 = \abs{-1-i}^2\cdot\frac{a^2}{32}(8+0+8) \quad \alpha_3 = \abs{-1+i}^2\cdot\frac{a^2}{32}(8+0+8) \quad \alpha_4 = 0 \Rightarrow\]
+\[\boxed{\alpha_1 = 2a^2 \quad \alpha_2 = a^2 \quad \alpha_3 = a^2 \quad \alpha_4 = 0}\]
+
+Remember that the \textbf{scalar} $a$ is the side length of the tetrahedron while the \textbf{vector} $\vect{a}$ represents coordinates of the four birds packed together in the same vector.
+
+\begin{align*}
+S &= \frac{1}{2}\int_0^{+\infty}\sqrt{2a^2 e^{-4\tau} + a^2 e^{-2\tau} + a^2 e^{-2\tau}}\cdot d\tau \Rightarrow \\
+S &= \frac{a\sqrt{2}}{2}\int_0^{+\infty}\sqrt{e^{-4\tau} + e^{-2\tau}}\cdot d\tau
+\end{align*}
+
+Now all that is left is solving the integral. First we do a substitution to eliminate the exponential.
+
+\begin{align*}
+u &= e^{-\tau} \\
+du &= -e^{-\tau}d\tau \Rightarrow d\tau = \frac{du}{-u} \Rightarrow \\
+S &= \frac{a\sqrt{2}}{2}\int_1^{0}\sqrt{u^4 + u^2}\cdot \frac{du}{-u} \Rightarrow \\
+S &= \frac{a\sqrt{2}}{2}\int_0^{1}\sqrt{u^2 + 1}\cdot du \\
+\end{align*}
+
+And now a trigonometric substitution to obtain a known integral.
+
+\begin{align*}
+u &= \tan\theta \\
+du &= \frac{d\theta}{\cos^2\theta} \\
+S &= \frac{a\sqrt{2}}{2}\int_0^{\frac{\pi}{4}}\sqrt{\frac{1}{\cos^2\theta}}\cdot \frac{d\theta}{\cos^2\theta} \Rightarrow \\
+S &= \frac{a\sqrt{2}}{2}\int_0^{\frac{\pi}{4}}\frac{1}{\abs{\cos\theta}}\cdot \frac{d\theta}{\cos^2\theta} \Rightarrow (\text{since} \: \cos\theta > 0) \\
+S &= \frac{a\sqrt{2}}{2}\int_0^{\frac{\pi}{4}} \frac{d\theta}{\cos^3\theta}
+\end{align*}
+
+This integral has solution $\frac{1}{2}\left(\frac{\sin\theta}{\cos^2\theta} + \ln\abs{\frac{1}{\cos\theta} + \tan\theta}\right) + C$
+
+Substituting we finally obtain our result.
+
+\begin{align*}
+S &= \frac{a\sqrt{2}}{2} \cdot \frac{1}{2}\left( \frac{\sin\frac{\pi}{4}}{\cos^2\frac{\pi}{4}} + \ln\abs{\frac{1}{\cos\frac{\pi}{4}} + \tan\frac{\pi}{4}} - \frac{\sin0}{\cos^20} + \ln\abs{\frac{1}{\cos0} + \tan0} \right) \Rightarrow \\
+S &= \frac{a\sqrt{2}}{2} \cdot \frac{1}{2}\left( \sqrt{2} + \ln\abs{1 + \sqrt{2}} - 0 + \ln\abs{1} \right) \Rightarrow \\
+S &= a \cdot \frac{2 + \sqrt{2}\ln\abs{1 + \sqrt{2}}}{4} \Rightarrow \boxed{S \approx 0.812 \cdot a}
+\end{align*}
+
+\end{document}
