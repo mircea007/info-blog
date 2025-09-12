@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Unde}
+\author{Mircea Rebengiuc}
+\date{December 2024}
+
+\usepackage{amsmath}
+\usepackage{braket}
+
+\newcommand{\vect}{\mathbf}
+
+\begin{document}
+\maketitle
+
+\section{Densitatiile de energii}
+
+In undele mecanice $u(x, t)$ reprezinta o deplasare fata de pozitia de echilibru a unei particule din material. Ne putem gandi ca noua pozitie a particulei care era la $x$ este $r(x, t) = x + u(x, t)$.
+
+\begin{align*}
+    u(x, t) &= A\sin(\omega t - kx) \\
+    E_c &= m\cdot \frac{v^2}{2} \\
+    dE_c &= dm \cdot \frac{(\frac{\partial r}{\partial t})^2}{2} \\
+    \frac{dE_c}{dV} &= \frac{dm}{dV}\cdot \frac{1}{2}\cdot (\frac{\partial u}{\partial t})^2 \\
+    w_c &= \frac{\rho}{2}\left(\frac{\partial u}{\partial t}\right)^2\\
+    w_c &= \rho\cdot \frac{1}{2}\cdot (-\omega A\cos(\omega t - kx))^2 \\
+    w_c &= \rho\cdot \frac{1}{2}\cdot \omega^2 A^2\cos^2(\omega t - kx) \\
+    w_c &= \frac{\rho\omega^2 A^2}{2}\cdot \cos^2(\omega t - kx) \\
+\end{align*}
+
+\begin{align*}
+    \braket{\cos^2x} &\approx \frac{1}{b-a}\int_a^b\cos^2x\cdot dx \\
+    \braket{\cos^2x} &\approx \frac{1}{b-a}\int_a^b\frac{1+\cos(2x)}{2}\cdot dx \\
+    \braket{\cos^2x} &\approx \frac{1}{b-a}\left(\frac{b-a}{2}+\frac{-1}{4}(\sin(2b) - \sin(2a))\right)\cdot dx \\
+\end{align*}
+
+\begin{align*}
+    \braket{w_c} &= \frac{\rho\omega^2 A^2}{4}
+\end{align*}
+
+Acum pentru densitatea de energie potentiala folosim legea lui Hooke $\sigma = E\cdot \epsilon$. Vrem sa gasim functia $\epsilon(x, t) = \:?$
+
+\begin{align*}
+    u(x, t) &= A\sin(\omega t - kx) \\
+    \epsilon &= \frac{\Delta l}{l_0} = \frac{r(x+dx, t) - r(x, t)-dx}{dx} \\
+    \epsilon &= \frac{u(x+dx, t) - u(x, t)}{dx} \\
+    \epsilon &= \frac{\partial u}{\partial x}
+\end{align*}
+
+Pentru a gasi densitatea de energie potentiala facem analogia cu o bara elastica de suprafata $S$. Stim . De asemenea stim.
+
+\begin{align*}
+    k &= \frac{E\cdot S}{l_0} \\
+    E_p &= \frac{1}{2} kx^2 = \frac{1}{2}\frac{E\cdot S}{l_0}\left(l_0\epsilon\right)^2 \\
+    E_p &= \frac{1}{2}E\cdot Sl_0 \epsilon^2 = \frac{1}{2}E \cdot V \epsilon^2 \\
+    \frac{E_p}{V} &= \frac{1}{2}E \epsilon^2 \\
+\end{align*}
+
+Putem generaliza acest rezultat oricarui mediu elastic fiindca local este acelasi fenomen:
+
+\begin{align*}
+    w_p &= \frac{E}{2}\epsilon(x, t)^2 \\
+    w_p &= \frac{E}{2}\left(\frac{\partial u}{\partial x}\right)^2 \\
+    w_p &= \frac{E}{2}\left(+kA\cos(\omega t - kx)\right)^2 \\
+    w_p &= \frac{Ek^2A^2}{2}\cos^2(\omega t - kx) \\
+    \braket{w_p} &= \frac{Ek^2A^2}{4}
+\end{align*}
+
+Pentru unde in mediu elastic viteza de propagare
+\begin{align*}
+    c &= \sqrt{\frac{E}{\rho}} \Rightarrow  c^2 = \frac{E}{\rho} \Rightarrow \\
+    \omega^2&=k^2\frac{E}{\rho} \Rightarrow \\
+    \rho\omega ^2 &= Ek^2
+\end{align*}
+
+Astfel obtinem ca densitatile de energie intr-un mediu elastic (pentru unda plana progresiva monocromatica) sunt EGALE (atat in medie cat si in fiecare punct in timp si spatiu).
+
+\begin{align*}
+    \braket{w_c} &= \braket{w_p} \Rightarrow \\
+    \braket{w_t} &= 2\braket{w_c} = 2\braket{w_p} \Rightarrow \\
+    \braket{w_t} &= \frac{\rho\omega^2 A^2}{2} = \frac{Ek^2A^2}{2}
+\end{align*}
+
+\section{De ce se numeste unda plana?}
+
+Pentru ca suprafetele de faza egala sunt plane (prost spus in 1D sau 2D), denumire care are sens doar in 3D. In 3 dimensiuni una plana progresiva monocromatica are ecuatia:
+
+\begin{align*}
+    u(x, y, z, t) &= A\sin(\omega t - k_xx - k_yy - k_zz) \\
+    u(\vect{r}, t) &= A\sin(\omega t - \vect{k} \cdot \vect{r})
+\end{align*}
+
+De aici este clar sa suprafete de faza egala sunt plane fiindca suprafetele de produs scalar $\vect{k} \cdot \vect{r}$ constant sunt plane perpendiculate pe $\vect{k}$.
+
+\section{Longitudinal vs Transversal}
+
+\subsection{1D}
+
+Practic o bara elastica se poate misca in 2 moduri: se comprima si se dilata de-alungul lungimii ei (unda longitudinala) si se poate misca perpendicular pe axa ei originala. Teoretic, ambele fenomene pot fi studiate considerand deplasearea fata de pozitia de echilibru $u(x, t)$ ca si un vector, in alte cuvinte avem cate o deplasare pentru fiecare coordonata:
+
+\begin{align*}
+    \vect{u}(x, t) &= u_x(x, t) \vect{i} + u_y(x, t)\vect{j}
+\end{align*}
+
+Pentru unda longitudinala avem $u_y(x, t) = 0$ mereu si pentru cea transversala $u_x(x, t) = 0$ mereu.
+
+\subsection{2D sau 3D}
+
+In 3D undele longitudinale se refera tot la unde care comprima si dilata materialul in timp ce cele transversale fac ca straturile consecutive din structura laticiala a materialului sa se deplaseze unul fata de celalalt, pastrandu-si distanta dintre ele egale.
+
+\section{Interferenta unei unde plane progresive monocromatice cu reflexia sa}
+
+Consideram o sursa la $x = 0$ si un perete la $x = D$. Fenomenul de reflexie in punctul peretelui produce un defazaj de $\pi$. Ne putem gandi la un punct care merge impreuna cu unda. El initial se misca la dreapta cu $+c$ si isi pastreaza faza, se loveste de perete si incepe sa se miste la stanga cu $-c$ cu faza constanta, care de data aceasta difera cu $\pi$ fata de cea initiala.
+
+Acum putem scrie unda rezultata ca suma undei initiale si a celei reflectate.
+
+\begin{align*}
+    u(x, t) &= u_0(x,t) + u_r(x, t) \\
+    u_0 &= A\sin(\omega t - kx) \\
+\end{align*}
+
+Fazele undei incidente si a celei reflectate la perete sunt:
+
+\begin{align*}
+    \varphi_i(t) &= \omega t - kD \\
+    \varphi_r(t) &= \varphi_i(t) + \pi = \omega t - kD + \pi
+\end{align*}
+
+Scriem ecuatia undei reflectate in functie de faza undei reflectate la perete. Unda reflectata este o unda plana monocromatica \textbf{regresiva} (faza se deplaseaza in stanga, nu in dreapta). Intr-o unda plana monocromatica daca oprim timpul $t = t_0$ si stim faza intr-un punct $\varphi(x, t) = \omega t - kx$ atunci putem scrie faza in alt punct ca si $\varphi(y, t) = \omega t - ky = \omega t - k(x - (x - y)) = \varphi(x, t) - k(y - x)$. Acelasi principiu il vom folosi si aici! Stim faza undei reflectate la perete, $u_r(D, t) = \varphi_r(t)$ si ne deplasam cu $D - x$ la stanga.
+
+\begin{align*}
+    u_r(x, t) &= A\sin(\varphi_r(t) - k(D - x)) = \\
+    u_r(x, t) &= A\sin(\omega t - kD + \pi - kD + kx) = \\
+    u_r(x, t) &= A\sin(\omega t + kx + (\pi - 2kD))
+\end{align*}
+
+Notam cu $\beta = \pi - 2kD$ defazaul intr-un punct produs de reflexia cu peretele de la $x = D$. Restul se stie din clasa.
+
+\end{document}
+
