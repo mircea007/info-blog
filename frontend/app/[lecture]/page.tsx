@@ -3,6 +3,15 @@ import fs from "fs";
 import path from "path";
 import { scopeCss } from "@/scopeCss";
 
+export function generateStaticParams(): { lecture: string }[] {
+  const meta_path = path.join(process.cwd(), "public", "meta.json");
+  const meta = JSON.parse(fs.readFileSync(meta_path, "utf-8"));
+
+  const ret = Object.keys(meta).map((code) => ({ lecture: code }));
+  console.log(ret);
+  return ret;
+}
+
 function get_meta(lecture: string): { 'date': string, 'title': string } {
   const meta_path = path.join(process.cwd(), "public", "meta.json");
   const meta = JSON.parse(fs.readFileSync(meta_path, "utf-8"));

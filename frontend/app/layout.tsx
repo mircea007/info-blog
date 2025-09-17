@@ -60,7 +60,7 @@ export default function RootLayout({
             <div className="flex-grow">
               {children}
             </div>
-            <div className="w-full md:w-72 bg-gray-100 border-l-2 border-indigo-300 p-4">
+            <div className="w-full md:w-72 md:min-w-72 bg-gray-100 border-l-2 border-indigo-300 p-4">
               <div className="md:sticky md:top-24">
                 <h1 className="text-md font-semibold underline decoration-2 decoration-indigo-300"> Lecture Notes </h1>
                 <ul role="list" className="ml-4 list-disc marker:text-indigo-400 ..."> 
