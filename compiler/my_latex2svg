@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+if [ $# -ne 2 ]; then
+  echo "Usage: $0 input.tex output.svg"
+  exit 1
+fi
+
+input=$1
+output=$2
+
+tmpdir=$(mktemp -d)
+basename=$(basename "$input" .tex)
+
+# Run LaTeX → DVI
+latex -interaction=nonstopmode -output-directory="$tmpdir" "$input"
+
+# Convert all pages into a single SVG
+dvisvgm -n --pages=1- --multipage=1 -o "$tmpdir/${basename}.svg" "$tmpdir/${basename}.dvi"
+
+# Fix namespaces in the SVG root
+#sed -i '1s|<svg |<svg xmlns:xlink="http://www.w3.org/1999/xlink" |' "$tmpdir/${basename}.svg"
+
+# Move to final output
+mv "$tmpdir/${basename}.svg" "$output"
+
+# Clean up
+rm -r "$tmpdir"
+

@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/*@import "tailwindcss/components";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+*/
 
 :root {
   --background: #ffffff;
@@ -25,6 +29,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*
 .doc-container > svg {
+
   @apply w-full h-full;
+}
+*/
+
+.doc-container > * {
+  all: revert;
+}
+
+.doc-container svg, .doc-container img {
+  display: inline;
 }

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#npm install -g inline-source-cli
+
+set -euo pipefail
+
+MY_RET=$(pwd)
+TMPDIR=$(mktemp -d /tmp/demo.XXXXXX)
+echo "Created temp dir: $TMPDIR"
+
+cp $1 "$TMPDIR/main.tex"
+cd $TMPDIR
+
+htlatex main.tex "xhtml,svg" "charset=utf-8"
+sed -i 's/img/img inline /g' main.html
+sed -i 's/link/link inline /g' main.html
+#parcel build main.html
+#npx parcel build main.html
+inline-source --root . main.html > bundle.html
+
+cd $MY_RET
+cp "$TMPDIR/bundle.html" $2
+
+# 5. Clean up (remove the whole temp directory)
+rm -rf "$TMPDIR"
+echo "Removed temp dir: $TMPDIR"
